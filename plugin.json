@@ -1,0 +1,29 @@
+{
+  "label": {
+    "de": "Version Central Tracker",
+    "en": "Version Central Tracker"
+  },
+  "copyright": "(c) by k10r GmbH",
+  "license": "Commercial",
+  "link": "http://www.k10r.de",
+  "author": "Version Central",
+  "support": "anfragen@kellerkinder.de",
+
+  "currentVersion": "0.0.1",
+
+  "changelog": {
+    "de": {
+      "0.0.1": "Erstveröffentlichung"
+    },
+    "en": {
+      "0.0.1": "First release"
+    }
+  },
+
+  "compatibility": {
+    "minimumVersion": "5.0.0",
+    "maximumVersion": null,
+    "blacklist": [
+    ]
+  }
+}

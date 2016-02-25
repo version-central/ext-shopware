@@ -1,0 +1,15 @@
+{
+  "name": "version-central/tracker",
+  "type": "shopware-core-plugin",
+  "description": "Version Central Tracker",
+  "license": "Commercial",
+  "authors": [
+    {
+      "name": "Stefan Matheis",
+      "email": "s.matheis@k10r.de"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
