@@ -147,6 +147,17 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
                     'afterConfigSave'
                 );
 
+                $bootstrap->createCronJob(
+                    'VersionCentralTrackerUpdate',
+                    'VersionCentralTrackerUpdateCron',
+                    60 * 60 * 24,
+                    true
+                );
+                $bootstrap->subscribeEvent(
+                    'Shopware_CronJob_VersionCentralTrackerUpdateCron',
+                    'executeUpdateCron'
+                );
+
                 return true;
             },
         ];
@@ -244,5 +255,26 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
 
         $args->getSubject()->View()->assign($result);
         return;
+    }
+
+
+    /**
+     * @param Shopware_Components_Cron_CronJob $job
+     * @return bool
+     */
+    public function executeUpdateCron(Shopware_Components_Cron_CronJob $job)
+    {
+        $output = new Symfony\Component\Console\Output\BufferedOutput();
+        $container = $this->Application()->Container();
+
+        try {
+            $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
+                $output, $container->get('models'), $container->get('config')
+            );
+            $trackerUpdate->execute();
+            return $trackerUpdate->getOutput()->fetch();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
