@@ -1,5 +1,8 @@
 <?php
 
+use Shopware\Plugins\VersionCentralTracker\Components\Credentials;
+use Shopware\Plugins\VersionCentralTracker\Components\HttpClient;
+
 class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Components_Plugin_Bootstrap
 {
     /**
@@ -102,12 +105,14 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     public function enable()
     {
         $config = $this->Config();
-        $httpClient = new Zend_Http_Client($config->get('versionCentralApiEndpoint'));
-        $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
-        $httpClient->setAuth(
+
+        $credentials = new Credentials(
+            $config->get('versionCentralApiEndpoint'),
             $config->get('versionCentralApiIdentifier'),
             $config->get('versionCentralApiToken')
         );
+
+        $httpClient = new HttpClient($credentials);
         $response = $httpClient->request($httpClient::HEAD);
 
         if (intval($response->getStatus()/100) !== 2) {
@@ -234,12 +239,13 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             $values[$element['name']] = $element['values'][0]['value'];
         }
 
-        $httpClient = new Zend_Http_Client($values['versionCentralApiEndpoint']);
-        $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
-        $httpClient->setAuth(
+        $credentials = new Credentials(
+            $values['versionCentralApiEndpoint'],
             $values['versionCentralApiIdentifier'],
             $values['versionCentralApiToken']
         );
+
+        $httpClient = new HttpClient($credentials);
         $response = $httpClient->request($httpClient::HEAD);
 
         if (intval($response->getStatus()/100) === 2) {

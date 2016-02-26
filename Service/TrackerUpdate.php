@@ -7,13 +7,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Doctrine\ORM\EntityManager;
 
-use Zend_Http_Client;
-
 use Shopware;
 use Shopware_Components_Config;
 use Shopware\Models\Plugin\Plugin;
 
 use DomainException;
+
+use Shopware\Plugins\VersionCentralTracker\Components\HttpClient;
+use Shopware\Plugins\VersionCentralTracker\Components\Credentials;
 
 class TrackerUpdate
 {
@@ -59,12 +60,13 @@ class TrackerUpdate
         'packages' => $plugins
     ];
 
-    $httpClient = new Zend_Http_Client($this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiEndpoint'));
-    $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
-    $httpClient->setAuth(
-        $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiIdentifier'),
-        $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiToken')
+    $credentials = new Credentials(
+      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiEndpoint'),
+      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiIdentifier'),
+      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiToken')
     );
+
+    $httpClient = new HttpClient($credentials);
     $httpClient->setRawData(json_encode($data), 'application/json');
     $response = $httpClient->request($httpClient::PUT);
     
