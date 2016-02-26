@@ -211,7 +211,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     public function onConsoleAddCommand(Enlight_Event_EventArgs $args)
     {
         return new \Doctrine\Common\Collections\ArrayCollection([
-            new \Shopware\Plugins\VersionCentralTracker\Commands\UpdateCommand(),
+            new \Shopware\Plugins\VersionCentralTracker\Commands\TrackerUpdateCommand(),
         ]);
     }
 
