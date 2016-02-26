@@ -110,7 +110,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $response = $httpClient->request($httpClient::HEAD);
 
         if (intval($response->getStatus()/100) !== 2) {
-            throw new Exception(__METHOD__);
+            throw new Exception(print_r($response, true));
         }
 
         return true;
