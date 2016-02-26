@@ -101,11 +101,12 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     public function enable()
     {
-        $httpClient = new Zend_Http_Client('http://data.version-central.vm');
+        $config = $this->Config();
+        $httpClient = new Zend_Http_Client($config->get('versionCentralApiEndpoint'));
         $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
         $httpClient->setAuth(
-            $this->Config()->get('versionCentralApiIdentifier'),
-            $this->Config()->get('versionCentralApiToken')
+            $config->get('versionCentralApiIdentifier'),
+            $config->get('versionCentralApiToken')
         );
         $response = $httpClient->request($httpClient::HEAD);
 
@@ -190,6 +191,17 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
                 'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
             ]
         );
+
+        $form->setElement(
+            'text',
+            'versionCentralApiEndpoint',
+            [
+                'label' => 'API Endpoint',
+                'value' => 'https://data.version-central.io',
+                'required' => true,
+                'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
+            ]
+        );
     }
 
     /**
@@ -211,7 +223,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             $values[$element['name']] = $element['values'][0]['value'];
         }
 
-        $httpClient = new Zend_Http_Client('http://data.version-central.vm');
+        $httpClient = new Zend_Http_Client($values['versionCentralApiEndpoint']);
         $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
         $httpClient->setAuth(
             $values['versionCentralApiIdentifier'],

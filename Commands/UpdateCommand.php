@@ -58,7 +58,7 @@ class UpdateCommand extends ShopwareCommand
 
         $config = $this->getContainer()->get('config');
 
-        $httpClient = new Zend_Http_Client('http://data.version-central.vm');
+        $httpClient = new Zend_Http_Client($config->getByNamespace('VersionCentralTracker', 'versionCentralApiEndpoint'));
         $httpClient->setHeaders('Accept', 'application/vnd.version-central-v1+json');
         $httpClient->setAuth(
             $config->getByNamespace('VersionCentralTracker', 'versionCentralApiIdentifier'),
