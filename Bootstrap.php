@@ -213,7 +213,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             'versionCentralApiEndpoint',
             [
                 'label' => 'API Endpoint',
-                'value' => 'https://data.version-central.io',
+                'value' => 'https://data.version-central.de',
                 'required' => true,
                 'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
             ]

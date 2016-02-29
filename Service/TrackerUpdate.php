@@ -39,7 +39,8 @@ class TrackerUpdate
     $builder = $this->em
         ->getRepository('Shopware\Models\Plugin\Plugin')
         ->createQueryBuilder('plugin')
-        ->andWhere('plugin.capabilityEnable = true');
+        ->andWhere('plugin.capabilityEnable = true')
+        ->andWhere('plugin.source != \'Default\'');
 
     $plugins = array_map(
         function(Plugin $plugin) {
@@ -83,7 +84,7 @@ class TrackerUpdate
     $httpClient = new HttpClient($credentials);
     $httpClient->setRawData(json_encode($data), 'application/json');
     $response = $httpClient->request($httpClient::PUT);
-    
+
     if (intval($response->getStatus()/100) !== 2) {
         $errors = array_map(
             function(array $error) {
