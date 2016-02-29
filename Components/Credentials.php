@@ -2,26 +2,20 @@
 
 namespace Shopware\Plugins\VersionCentralTracker\Components;
 
-use Zend_Http_Client;
-
 use DomainException;
 
 class Credentials
 {
-  protected $endpoint;
   protected $identifier;
   protected $token;
 
-  public function __construct($endpoint, $identifier, $token)
+  public function __construct($credentials)
   {
-    $this->endpoint = $endpoint;
-    $this->identifier = $identifier;
-    $this->token = $token;
-  }
-
-  public function getEndpoint()
-  {
-    return $this->endpoint;
+    if (!$credentials) {
+      throw new DomainException('No credentials given');
+    }
+    
+    list($this->identifier, $this->token) = explode(':', $credentials);
   }
 
   public function getIdentifier()

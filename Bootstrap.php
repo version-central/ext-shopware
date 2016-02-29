@@ -107,9 +107,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $config = $this->Config();
 
         $credentials = new Credentials(
-            $config->get('versionCentralApiEndpoint'),
-            $config->get('versionCentralApiIdentifier'),
-            $config->get('versionCentralApiToken')
+            $config->get('versionCentralApiCredentials')
         );
 
         $httpClient = new HttpClient($credentials);
@@ -188,32 +186,10 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
 
         $form->setElement(
             'text',
-            'versionCentralApiIdentifier',
+            'versionCentralApiCredentials',
             [
-                'label' => 'API Identifier',
+                'label' => 'API Credentials',
                 'value' => null,
-                'required' => true,
-                'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
-            ]
-        );
-
-        $form->setElement(
-            'text',
-            'versionCentralApiToken',
-            [
-                'label' => 'API Token',
-                'value' => null,
-                'required' => true,
-                'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
-            ]
-        );
-
-        $form->setElement(
-            'text',
-            'versionCentralApiEndpoint',
-            [
-                'label' => 'API Endpoint',
-                'value' => 'https://data.version-central.io',
                 'required' => true,
                 'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
             ]
@@ -240,9 +216,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         }
 
         $credentials = new Credentials(
-            $values['versionCentralApiEndpoint'],
-            $values['versionCentralApiIdentifier'],
-            $values['versionCentralApiToken']
+            $values['versionCentralApiCredentials']
         );
 
         $httpClient = new HttpClient($credentials);

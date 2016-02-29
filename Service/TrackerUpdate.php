@@ -75,9 +75,7 @@ class TrackerUpdate
     ];
 
     $credentials = new Credentials(
-      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiEndpoint'),
-      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiIdentifier'),
-      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiToken')
+      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiCredentials')
     );
 
     $httpClient = new HttpClient($credentials);
