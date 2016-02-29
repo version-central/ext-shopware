@@ -1,12 +1,12 @@
 {
   "label": {
-    "de": "Version Central Tracker",
-    "en": "Version Central Tracker"
+    "de": "VersionCentral Tracker",
+    "en": "VersionCentral Tracker"
   },
   "copyright": "(c) by k10r GmbH",
   "license": "Commercial",
   "link": "http://www.k10r.de",
-  "author": "Version Central",
+  "author": "k10r GmbH",
   "support": "anfragen@kellerkinder.de",
 
   "currentVersion": "0.0.1",
