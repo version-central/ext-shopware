@@ -52,12 +52,26 @@ class TrackerUpdate
         $builder->getQuery()->execute()
     );
 
+    $shop = $this->em->getRepository('Shopware\Models\Shop\Shop')->getDefault();
+    if (!$shop) {
+      throw new DomainException('No default shop found. Check your shop configuration');
+    }
+
     $data = [
         'application' => [
             'identifier' => 'shopware',
             'version' => Shopware::VERSION
         ],
-        'packages' => $plugins
+        'packages' => $plugins,
+        'meta' => [
+          'name' => $shop->getName(),
+          'url' => sprintf(
+            '%s://%s/%s',
+            $shop->getSecure() ? 'https' : 'http',
+            $shop->getHost(),
+            ltrim($shop->getBasePath(), '/')
+          )
+        ]
     ];
 
     $credentials = new Credentials(
