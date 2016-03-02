@@ -8,7 +8,7 @@ use DomainException;
 
 class HttpClient extends Zend_Http_Client
 {
-  const API_ENDPOINT = 'https://data.version-central.de';
+  const API_ENDPOINT = 'https://data.versioncentral.com';
 
   public function __construct(Credentials $credentials)
   {
