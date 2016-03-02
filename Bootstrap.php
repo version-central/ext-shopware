@@ -31,7 +31,8 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             'version'     => $this->getVersion(),
             'author'      => $this->getPluginInfo()['author'],
             'label'       => $this->getLabel(),
-            'description' => str_replace('%label%', $this->getLabel(), file_get_contents(sprintf('%s/plugin.txt', __DIR__))),
+            'description' => str_replace('%label%', $this->getLabel(),
+                file_get_contents(sprintf('%s/plugin.txt', __DIR__))),
             'copyright'   => $this->getPluginInfo()['copyright'],
             'support'     => $this->getPluginInfo()['support'],
             'link'        => $this->getPluginInfo()['link'],
@@ -46,7 +47,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         if ($this->pluginInfo === []) {
             $file = sprintf('%s/plugin.json', __DIR__);
 
-            if (!file_exists($file) || !is_file($file)) {
+            if ( ! file_exists($file) || ! is_file($file)) {
                 throw new \RuntimeException('The plugin has an invalid version file.');
             }
 
@@ -61,7 +62,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     public function getLabel()
     {
-        return (string) $this->getPluginInfo()['label']['de'];
+        return (string)$this->getPluginInfo()['label']['de'];
     }
 
     /**
@@ -104,18 +105,12 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     public function enable()
     {
-        $config = $this->Config();
-
-        $credentials = new Credentials(
-            $config->get('versionCentralApiCredentials')
+        $output = new Symfony\Component\Console\Output\NullOutput();
+        $container = $this->Application()->Container();
+        $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
+            $output, $container->get('models'), $container->get('config')
         );
-
-        $httpClient = new HttpClient($credentials);
-        $response = $httpClient->request($httpClient::HEAD);
-
-        if (intval($response->getStatus()/100) !== 2) {
-            throw new Exception(print_r($response, true));
-        }
+        $trackerUpdate->execute();
 
         return true;
     }
@@ -167,7 +162,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
 
         foreach ($versionClosures as $version => $versionClosure) {
             if (version_compare($oldVersion, $this->getVersion(), '<')) {
-                if (!$versionClosure($this)) {
+                if ( ! $versionClosure($this)) {
                     return false;
                 }
             }
@@ -188,10 +183,10 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             'text',
             'versionCentralApiCredentials',
             [
-                'label' => 'API Credentials',
-                'value' => null,
+                'label'    => 'API Credentials',
+                'value'    => null,
                 'required' => true,
-                'scope' => Shopware\Models\Config\Element::SCOPE_SHOP
+                'scope'    => Shopware\Models\Config\Element::SCOPE_SHOP,
             ]
         );
     }
@@ -207,7 +202,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         ]);
     }
 
-    public function afterConfigSave(Enlight_Event_EventArgs $args)
+    public function afterConfigSave(Enlight_Hook_HookArgs $args)
     {
         $request = $args->getSubject()->Request();
         $values = [];
@@ -222,19 +217,18 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $httpClient = new HttpClient($credentials);
         $response = $httpClient->request($httpClient::HEAD);
 
-        if (intval($response->getStatus()/100) === 2) {
+        if (intval($response->getStatus() / 100) === 2) {
             $result = [
-                'success' => true
+                'success' => true,
             ];
         } else {
             $result = [
                 'success' => false,
-                'message' => 'AUTHORIZATION_INVALID'
+                'message' => 'AUTHORIZATION_INVALID',
             ];
         }
 
         $args->getSubject()->View()->assign($result);
-        return;
     }
 
 
@@ -252,6 +246,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
                 $output, $container->get('models'), $container->get('config')
             );
             $trackerUpdate->execute();
+
             return $trackerUpdate->getOutput()->fetch();
         } catch (Exception $e) {
             return $e->getMessage();

@@ -13,7 +13,7 @@ class HttpClient extends Zend_Http_Client
   public function __construct(Credentials $credentials)
   {
     parent::__construct(self::API_ENDPOINT);
-    
+
     $this->setHeaders('Accept', 'application/vnd.version-central-v1+json');
     $this->setAuth($credentials->getIdentifier(), $credentials->getToken());
   }
