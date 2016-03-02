@@ -218,13 +218,23 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $response = $httpClient->request($httpClient::HEAD);
 
         if (intval($response->getStatus() / 100) === 2) {
-            $result = [
-                'success' => true,
-            ];
+            $output = new \Symfony\Component\Console\Output\BufferedOutput();
+
+            try {
+                $result = [
+                    'success' => true,
+                    'message' => $this->executeUpdate($output),
+                ];
+            } catch(Exception $e) {
+                $result = [
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ];
+            }
         } else {
             $result = [
                 'success' => false,
-                'message' => 'AUTHORIZATION_INVALID',
+                'message' => 'Verbindung nicht erfolgreich, bitte prüfen Sie Ihre API-Daten.',
             ];
         }
 
@@ -239,17 +249,21 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     public function executeUpdateCron(Shopware_Components_Cron_CronJob $job)
     {
         $output = new Symfony\Component\Console\Output\BufferedOutput();
-        $container = $this->Application()->Container();
-
         try {
-            $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
-                $output, $container->get('models'), $container->get('config')
-            );
-            $trackerUpdate->execute();
-
-            return $trackerUpdate->getOutput()->fetch();
+            return $this->executeUpdate($output);
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    protected function executeUpdate($output) {
+        $container = $this->Application()->Container();
+
+        $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
+            $output, $container->get('models'), $container->get('config')
+        );
+        $trackerUpdate->execute();
+
+        return $trackerUpdate->getOutput()->fetch();
     }
 }

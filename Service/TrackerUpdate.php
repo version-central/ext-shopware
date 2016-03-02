@@ -84,14 +84,23 @@ class TrackerUpdate
     $response = $httpClient->request($httpClient::PUT);
 
     if (intval($response->getStatus()/100) !== 2) {
-        $errors = array_map(
+        $body = array_map(
             function(array $error) {
                 unset($error['schema']);
                 return $error;
             },
             json_decode($response->getBody(), true)
         );
-        throw new DomainException(print_r($errors, true));
+
+        if($response->getStatus() == 401) {
+            $message = 'Verbindung nicht erfolgreich, bitte prüfen Sie Ihre API-Daten.';
+        } else {
+            $message = '';
+            foreach($body["errors"] as $error) {
+                $message .= \Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage($error["code"]) . "\n";
+            }
+        }
+        throw new DomainException($message);
     }
 
     $this->output->writeln(sprintf('<info>Versions successfully updated.</info>'));
