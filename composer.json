@@ -1,12 +1,16 @@
 {
   "name": "version-central/tracker",
   "type": "shopware-core-plugin",
-  "description": "Version Central Tracker",
-  "license": "Commercial",
+  "description": "VersionCentral Tracker",
+  "license": "MIT",
   "authors": [
     {
       "name": "Stefan Matheis",
       "email": "s.matheis@k10r.de"
+    },
+    {
+      "name": "Uwe Kleinmann",
+      "email": "u.kleinmann@k10r.de"
     }
   ],
   "require": {

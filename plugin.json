@@ -4,19 +4,19 @@
     "en": "VersionCentral Tracker"
   },
   "copyright": "(c) by k10r GmbH",
-  "license": "Commercial",
+  "license": "MIT",
   "link": "http://www.k10r.de",
   "author": "k10r GmbH",
-  "support": "anfragen@kellerkinder.de",
+  "support": "versioncentral@k10r.de",
 
-  "currentVersion": "0.0.1",
+  "currentVersion": "1.0.0",
 
   "changelog": {
     "de": {
-      "0.0.1": "Erstveröffentlichung"
+      "1.0.0": "Erstveröffentlichung"
     },
     "en": {
-      "0.0.1": "First release"
+      "1.0.0": "First release"
     }
   },
 
