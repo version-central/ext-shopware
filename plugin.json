@@ -9,13 +9,15 @@
   "author": "k10r GmbH",
   "support": "versioncentral@k10r.de",
 
-  "currentVersion": "1.0.0",
+  "currentVersion": "1.0.1",
 
   "changelog": {
     "de": {
+      "1.0.1": "Bugfixes für Credential-Überprüfung",
       "1.0.0": "Erstveröffentlichung"
     },
     "en": {
+      "1.0.1": "Bugfixes for checking credentials",
       "1.0.0": "First release"
     }
   },

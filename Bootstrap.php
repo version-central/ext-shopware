@@ -132,7 +132,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     {
         $versionClosures = array(
 
-            '0.0.1' => function (Shopware_Plugins_Core_VersionCentralTracker_Bootstrap $bootstrap) {
+            '1.0.0' => function (Shopware_Plugins_Core_VersionCentralTracker_Bootstrap $bootstrap) {
                 $bootstrap->addConfigurationForm();
 
                 $bootstrap->subscribeEvent(
@@ -161,7 +161,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         );
 
         foreach ($versionClosures as $version => $versionClosure) {
-            if (version_compare($oldVersion, $this->getVersion(), '<')) {
+            if (version_compare($oldVersion, $this->getVersion(), '>')) {
                 if ( ! $versionClosure($this)) {
                     return false;
                 }
