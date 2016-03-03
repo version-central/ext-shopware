@@ -50,9 +50,9 @@ Afterwards, run `composer install` and the plugin should be available
 
 ## Configuration
 
-Open the Plugin Manager in your Shopware backend and install and activate the plugin.
+Open the Plugin Manager in your Shopware backend and install the plugin.
 
-Afterwards open the plugin configuration and add your application token from the VersionCentral project. After saving the configuration, information should appear for your application in the VersionCentral dashboard.
+Afterwards open the plugin configuration and add your application token from the VersionCentral project. After saving the configuration, you can activate the plugin. Information should appear for your application in the VersionCentral dashboard.
 
 **Note:** Shopware-Cronjob-Plugin has to be installed, enabled and running. Have a look on the [Shopware Wiki](http://community.shopware.com/Cronjobs_detail_1102.html) for further information how to activate cronjobs.
 
