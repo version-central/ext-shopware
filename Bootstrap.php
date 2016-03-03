@@ -204,14 +204,8 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
 
     public function afterConfigSave(Enlight_Hook_HookArgs $args)
     {
-        $request = $args->getSubject()->Request();
-        $values = array();
-        foreach ($request->getParam('elements') as $element) {
-            $values[$element['name']] = $element['values'][0]['value'];
-        }
-
         $credentials = new Credentials(
-            $values['versionCentralApiCredentials']
+           $this->Config()['versionCentralApiCredentials']
         );
 
         $httpClient = new HttpClient($credentials);

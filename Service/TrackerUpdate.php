@@ -76,7 +76,7 @@ class TrackerUpdate
     ];
 
     $credentials = new Credentials(
-      $this->config->getByNamespace('VersionCentralTracker', 'versionCentralApiCredentials')
+        Shopware()->Plugins()->Core()->VersionCentralTracker()->Config()['versionCentralApiCredentials']
     );
 
     $httpClient = new HttpClient($credentials);
