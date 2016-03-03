@@ -8,18 +8,18 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     /**
      * @var array
      */
-    protected $pluginInfo = [];
+    protected $pluginInfo = array();
 
     /**
      * @return array
      */
     public function getCapabilities()
     {
-        return [
+        return array(
             'install' => true,
             'enable'  => true,
             'update'  => true,
-        ];
+        );
     }
 
     /**
@@ -27,7 +27,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     public function getInfo()
     {
-        return [
+        return array(
             'version'     => $this->getVersion(),
             'author'      => $this->getPluginInfo()['author'],
             'label'       => $this->getLabel(),
@@ -36,7 +36,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             'copyright'   => $this->getPluginInfo()['copyright'],
             'support'     => $this->getPluginInfo()['support'],
             'link'        => $this->getPluginInfo()['link'],
-        ];
+        );
     }
 
     /**
@@ -44,7 +44,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     protected function getPluginInfo()
     {
-        if ($this->pluginInfo === []) {
+        if ($this->pluginInfo === array()) {
             $file = sprintf('%s/plugin.json', __DIR__);
 
             if ( ! file_exists($file) || ! is_file($file)) {
@@ -130,7 +130,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     private function createEvents($oldVersion = null)
     {
-        $versionClosures = [
+        $versionClosures = array(
 
             '0.0.1' => function (Shopware_Plugins_Core_VersionCentralTracker_Bootstrap $bootstrap) {
                 $bootstrap->addConfigurationForm();
@@ -158,7 +158,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
 
                 return true;
             },
-        ];
+        );
 
         foreach ($versionClosures as $version => $versionClosure) {
             if (version_compare($oldVersion, $this->getVersion(), '<')) {
@@ -176,18 +176,18 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $form = $this->Form();
 
         $form->setParent(
-            $this->Forms()->findOneBy(['name' => 'Interface'])
+            $this->Forms()->findOneBy(array('name' => 'Interface'))
         );
 
         $form->setElement(
             'text',
             'versionCentralApiCredentials',
-            [
+            array(
                 'label'    => 'API Credentials',
                 'value'    => null,
                 'required' => true,
                 'scope'    => Shopware\Models\Config\Element::SCOPE_SHOP,
-            ]
+            )
         );
     }
 
@@ -197,15 +197,15 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
      */
     public function onConsoleAddCommand(Enlight_Event_EventArgs $args)
     {
-        return new \Doctrine\Common\Collections\ArrayCollection([
+        return new \Doctrine\Common\Collections\ArrayCollection(array(
             new \Shopware\Plugins\VersionCentralTracker\Commands\TrackerUpdateCommand(),
-        ]);
+        ));
     }
 
     public function afterConfigSave(Enlight_Hook_HookArgs $args)
     {
         $request = $args->getSubject()->Request();
-        $values = [];
+        $values = array();
         foreach ($request->getParam('elements') as $element) {
             $values[$element['name']] = $element['values'][0]['value'];
         }
@@ -221,21 +221,21 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
             $output = new \Symfony\Component\Console\Output\BufferedOutput();
 
             try {
-                $result = [
+                $result = array(
                     'success' => true,
                     'message' => $this->executeUpdate($output),
-                ];
+                );
             } catch(Exception $e) {
-                $result = [
+                $result = array(
                     'success' => false,
                     'message' => $e->getMessage(),
-                ];
+                );
             }
         } else {
-            $result = [
+            $result = array(
                 'success' => false,
                 'message' => 'Verbindung nicht erfolgreich, bitte prüfen Sie Ihre API-Daten.',
-            ];
+            );
         }
 
         $args->getSubject()->View()->assign($result);
