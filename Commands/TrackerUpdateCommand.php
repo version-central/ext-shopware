@@ -5,15 +5,8 @@ namespace Shopware\Plugins\VersionCentralTracker\Commands;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Shopware\Commands\ShopwareCommand;
-use Shopware\Models\Plugin\Plugin;
 use Shopware;
-
-use Zend_Http_Client;
-
-use DomainException;
-
 use Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate;
 
 class TrackerUpdateCommand extends ShopwareCommand
@@ -36,7 +29,7 @@ class TrackerUpdateCommand extends ShopwareCommand
     {
         $container = $this->getContainer();
 
-        $trackerUpdate = new TrackerUpdate($output, $container->get('models'), $container->get('config'));
+        $trackerUpdate = new TrackerUpdate($output, $container->get('models'));
         $trackerUpdate->execute();
 
         return false;

@@ -108,7 +108,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $output = new Symfony\Component\Console\Output\NullOutput();
         $container = $this->Application()->Container();
         $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
-            $output, $container->get('models'), $container->get('config')
+            $output, $container->get('models')
         );
         $trackerUpdate->execute();
 
@@ -254,7 +254,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         $container = $this->Application()->Container();
 
         $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
-            $output, $container->get('models'), $container->get('config')
+            $output, $container->get('models')
         );
         $trackerUpdate->execute();
 

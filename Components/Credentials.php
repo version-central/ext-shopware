@@ -12,7 +12,7 @@ class Credentials
   public function __construct($credentials)
   {
     if (!$credentials) {
-      throw new DomainException('No credentials given');
+      throw new DomainException(\Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid'));
     }
     
     list($this->identifier, $this->token) = explode(':', $credentials);

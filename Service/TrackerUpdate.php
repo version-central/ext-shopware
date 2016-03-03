@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
 use Shopware;
-use Shopware_Components_Config;
 use Shopware\Models\Plugin\Plugin;
 
 use DomainException;
@@ -24,14 +23,10 @@ class TrackerUpdate
   /** @var EntityManager */
   protected $em;
 
-  /** @var InventoryFile */
-  protected $config;
-
-  public function __construct(OutputInterface $output, EntityManager $em, Shopware_Components_Config $config)
+  public function __construct(OutputInterface $output, EntityManager $em)
   {
     $this->output = $output;
     $this->em = $em;
-    $this->config = $config;
   }
 
   public function execute()
@@ -92,7 +87,7 @@ class TrackerUpdate
         );
 
         if($response->getStatus() == 401) {
-            $message = 'Verbindung nicht erfolgreich, bitte prüfen Sie Ihre API-Daten.';
+            $message = \Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid');
         } else {
             $message = '';
             foreach($body["errors"] as $error) {
