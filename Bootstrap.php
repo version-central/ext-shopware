@@ -161,7 +161,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
         );
 
         foreach ($versionClosures as $version => $versionClosure) {
-            if (version_compare($oldVersion, $this->getVersion(), '>')) {
+            if ($oldVersion === null || version_compare($oldVersion, $this->getVersion(), '>')) {
                 if ( ! $versionClosure($this)) {
                     return false;
                 }
