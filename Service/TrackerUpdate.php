@@ -86,7 +86,6 @@ class TrackerUpdate
     if (intval($response->getStatus()/100) !== 2) {
         $body = array_map(
             function(array $error) {
-                unset($error['schema']);
                 return $error;
             },
             json_decode($response->getBody(), true)
