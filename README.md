@@ -15,6 +15,10 @@ Download the [current ZIP](https://github.com/version-central/ext-shopware/archi
 
 Keep the directory structure of the ZIP intact.
 
+### Shopware Plugin Manager
+
+Download the latest [release ZIP](https://github.com/version-central/ext-shopware/releases) and upload it via the plugin manager in your Shopware backend.
+
 ### composer
 
 You can also install the plugin via composer.
