@@ -1,5 +1,5 @@
 <?php
-namespace Shopware\Plugins\VersionCentralTracker\Components;
+namespace Shopware\Plugins\K10rVersionCentralTracker\Components;
 
 class Error
 {

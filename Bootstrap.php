@@ -1,9 +1,9 @@
 <?php
 
-use Shopware\Plugins\VersionCentralTracker\Components\Credentials;
-use Shopware\Plugins\VersionCentralTracker\Components\HttpClient;
+use Shopware\Plugins\K10rVersionCentralTracker\Components\Credentials;
+use Shopware\Plugins\K10rVersionCentralTracker\Components\HttpClient;
 
-class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Components_Plugin_Bootstrap
+class Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap extends Shopware_Components_Plugin_Bootstrap
 {
     /**
      * @var array
@@ -107,7 +107,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     {
         $output = new Symfony\Component\Console\Output\NullOutput();
         $container = $this->Application()->Container();
-        $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
+        $trackerUpdate = new Shopware\Plugins\K10rVersionCentralTracker\Service\TrackerUpdate(
             $output, $container->get('models')
         );
         $trackerUpdate->execute();
@@ -118,7 +118,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     public function afterInit()
     {
         $this->get('Loader')->registerNamespace(
-            'Shopware\Plugins\VersionCentralTracker',
+            'Shopware\Plugins\K10rVersionCentralTracker',
             $this->Path()
         );
     }
@@ -132,7 +132,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     {
         $versionClosures = array(
 
-            '1.0.0' => function (Shopware_Plugins_Core_VersionCentralTracker_Bootstrap $bootstrap) {
+            '1.0.0' => function (Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap $bootstrap) {
                 $bootstrap->addConfigurationForm();
 
                 $bootstrap->subscribeEvent(
@@ -146,13 +146,13 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
                 );
 
                 $bootstrap->createCronJob(
-                    'VersionCentralTrackerUpdate',
-                    'VersionCentralTrackerUpdateCron',
+                    'K10rVersionCentralTrackerUpdate',
+                    'K10rVersionCentralTrackerUpdateCron',
                     60 * 60 * 24,
                     true
                 );
                 $bootstrap->subscribeEvent(
-                    'Shopware_CronJob_VersionCentralTrackerUpdateCron',
+                    'Shopware_CronJob_K10rVersionCentralTrackerUpdateCron',
                     'executeUpdateCron'
                 );
 
@@ -198,7 +198,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     public function onConsoleAddCommand(Enlight_Event_EventArgs $args)
     {
         return new \Doctrine\Common\Collections\ArrayCollection(array(
-            new \Shopware\Plugins\VersionCentralTracker\Commands\TrackerUpdateCommand(),
+            new \Shopware\Plugins\K10rVersionCentralTracker\Commands\TrackerUpdateCommand(),
         ));
     }
 
@@ -253,7 +253,7 @@ class Shopware_Plugins_Core_VersionCentralTracker_Bootstrap extends Shopware_Com
     protected function executeUpdate($output) {
         $container = $this->Application()->Container();
 
-        $trackerUpdate = new Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate(
+        $trackerUpdate = new Shopware\Plugins\K10rVersionCentralTracker\Service\TrackerUpdate(
             $output, $container->get('models')
         );
         $trackerUpdate->execute();

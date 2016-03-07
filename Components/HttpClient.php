@@ -1,10 +1,8 @@
 <?php
 
-namespace Shopware\Plugins\VersionCentralTracker\Components;
+namespace Shopware\Plugins\K10rVersionCentralTracker\Components;
 
 use Zend_Http_Client;
-
-use DomainException;
 
 class HttpClient extends Zend_Http_Client
 {

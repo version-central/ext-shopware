@@ -1,4 +1,4 @@
-# VersionCentralTracker
+# K10rVersionCentralTracker
 
 ## Support
 
@@ -11,7 +11,7 @@
 
 ### Manual
 
-Download the [current ZIP](https://github.com/version-central/ext-shopware/archive/master.zip) and copy the files into your shop directory into `engine/Shopware/Plugins/Local/VersionCentralTracker`.
+Download the [current ZIP](https://github.com/version-central/ext-shopware/archive/master.zip) and copy the files into your shop directory into `engine/Shopware/Plugins/Local/Core/K10rVersionCentralTracker`.
 
 Keep the directory structure of the ZIP intact.
 
@@ -58,4 +58,4 @@ Afterwards open the plugin configuration and add your application token from the
 
 ## Contact
 
-If you have any problems or suggestions, just email us at [versioncentral@k10r.de](mailto:versioncentral@k10r.de).
+If you have any problems or suggestions, just email us at [support@versioncentral.com](mailto:support@versioncentral.com).

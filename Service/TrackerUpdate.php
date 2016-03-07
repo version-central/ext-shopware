@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopware\Plugins\VersionCentralTracker\Service;
+namespace Shopware\Plugins\K10rVersionCentralTracker\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,8 +12,8 @@ use Shopware\Models\Plugin\Plugin;
 
 use DomainException;
 
-use Shopware\Plugins\VersionCentralTracker\Components\HttpClient;
-use Shopware\Plugins\VersionCentralTracker\Components\Credentials;
+use Shopware\Plugins\K10rVersionCentralTracker\Components\HttpClient;
+use Shopware\Plugins\K10rVersionCentralTracker\Components\Credentials;
 
 class TrackerUpdate
 {
@@ -71,7 +71,7 @@ class TrackerUpdate
     ];
 
     $credentials = new Credentials(
-        Shopware()->Plugins()->Core()->VersionCentralTracker()->Config()['versionCentralApiCredentials']
+        Shopware()->Plugins()->Core()->K10rVersionCentralTracker()->Config()['versionCentralApiCredentials']
     );
 
     $httpClient = new HttpClient($credentials);
@@ -87,11 +87,11 @@ class TrackerUpdate
         );
 
         if($response->getStatus() == 401) {
-            $message = \Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid');
+            $message = \Shopware\Plugins\K10rVersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid');
         } else {
             $message = '';
             foreach($body["errors"] as $error) {
-                $message .= \Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage($error["code"]) . "\n";
+                $message .= \Shopware\Plugins\K10rVersionCentralTracker\Components\Error::getErrorMessage($error["code"]) . "\n";
             }
         }
         throw new DomainException($message);

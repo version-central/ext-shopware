@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopware\Plugins\VersionCentralTracker\Components;
+namespace Shopware\Plugins\K10rVersionCentralTracker\Components;
 
 use DomainException;
 
@@ -12,7 +12,7 @@ class Credentials
   public function __construct($credentials)
   {
     if (!$credentials) {
-      throw new DomainException(\Shopware\Plugins\VersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid'));
+      throw new DomainException(\Shopware\Plugins\K10rVersionCentralTracker\Components\Error::getErrorMessage('api_credentials_invalid'));
     }
     
     list($this->identifier, $this->token) = explode(':', $credentials);

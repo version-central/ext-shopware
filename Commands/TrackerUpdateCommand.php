@@ -1,13 +1,13 @@
 <?php
 
-namespace Shopware\Plugins\VersionCentralTracker\Commands;
+namespace Shopware\Plugins\K10rVersionCentralTracker\Commands;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Shopware\Commands\ShopwareCommand;
 use Shopware;
-use Shopware\Plugins\VersionCentralTracker\Service\TrackerUpdate;
+use Shopware\Plugins\K10rVersionCentralTracker\Service\TrackerUpdate;
 
 class TrackerUpdateCommand extends ShopwareCommand
 {
