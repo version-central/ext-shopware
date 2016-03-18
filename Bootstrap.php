@@ -27,15 +27,16 @@ class Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap extends Shopware
      */
     public function getInfo()
     {
+        $pluginInfo = $this->getPluginInfo();
         return array(
             'version'     => $this->getVersion(),
-            'author'      => $this->getPluginInfo()['author'],
+            'author'      => $pluginInfo['author'],
             'label'       => $this->getLabel(),
             'description' => str_replace('%label%', $this->getLabel(),
                 file_get_contents(sprintf('%s/plugin.txt', __DIR__))),
-            'copyright'   => $this->getPluginInfo()['copyright'],
-            'support'     => $this->getPluginInfo()['support'],
-            'link'        => $this->getPluginInfo()['link'],
+            'copyright'   => $pluginInfo['copyright'],
+            'support'     => $pluginInfo['support'],
+            'link'        => $pluginInfo['link'],
         );
     }
 
@@ -62,7 +63,8 @@ class Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap extends Shopware
      */
     public function getLabel()
     {
-        return (string)$this->getPluginInfo()['label']['de'];
+        $pluginInfo = $this->getPluginInfo();
+        return (string)$pluginInfo['label']['de'];
     }
 
     /**
@@ -70,7 +72,8 @@ class Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap extends Shopware
      */
     public function getVersion()
     {
-        return $this->getPluginInfo()['currentVersion'];
+        $pluginInfo = $this->getPluginInfo();
+        return $pluginInfo['currentVersion'];
     }
 
     /**
@@ -204,8 +207,9 @@ class Shopware_Plugins_Core_K10rVersionCentralTracker_Bootstrap extends Shopware
 
     public function afterConfigSave(Enlight_Hook_HookArgs $args)
     {
+        $config = $this->Config();
         $credentials = new Credentials(
-           $this->Config()['versionCentralApiCredentials']
+           $config['versionCentralApiCredentials']
         );
 
         $httpClient = new HttpClient($credentials);

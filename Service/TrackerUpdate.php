@@ -39,11 +39,11 @@ class TrackerUpdate
 
     $plugins = array_map(
         function(Plugin $plugin) {
-            return [
+            return array(
                 'identifier' => $plugin->getName(),
                 'version' => $plugin->getVersion(),
                 'active' => $plugin->getActive()
-            ];
+            );
         },
         $builder->getQuery()->execute()
     );
@@ -53,13 +53,13 @@ class TrackerUpdate
       throw new DomainException('No default shop found. Check your shop configuration');
     }
 
-    $data = [
-        'application' => [
+    $data = array(
+        'application' => array(
             'identifier' => 'shopware',
             'version' => Shopware::VERSION
-        ],
+        ),
         'packages' => $plugins,
-        'meta' => [
+        'meta' => array(
           'name' => $shop->getName(),
           'url' => sprintf(
             '%s://%s/%s',
@@ -67,11 +67,12 @@ class TrackerUpdate
             $shop->getHost(),
             ltrim($shop->getBasePath(), '/')
           )
-        ]
-    ];
+        )
+    );
 
+    $config = Shopware()->Plugins()->Core()->K10rVersionCentralTracker()->Config();
     $credentials = new Credentials(
-        Shopware()->Plugins()->Core()->K10rVersionCentralTracker()->Config()['versionCentralApiCredentials']
+        $config['versionCentralApiCredentials']
     );
 
     $httpClient = new HttpClient($credentials);
